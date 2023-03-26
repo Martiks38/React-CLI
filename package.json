@@ -3,12 +3,11 @@
   "version": "0.0.1",
   "description": "A command line tool for React",
   "type": "module",
-  "main": "./src/index.js",
+  "main": "./bin/index.js",
   "bin": {
-    "rg": "./src/index.js"
+    "rg": "./bin/index.js"
   },
   "scripts": {
-    "dev": "node ./src/index.js",
     "prepare": "husky install",
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.cts,.mts",
@@ -22,8 +21,9 @@
   "author": "Martiks38 <cappa.giuliano@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "^10.0.0",
-    "inquirer": "^9.1.5"
+    "commander": "10.0.0",
+    "inquirer": "9.1.5",
+    "picocolors": "1.0.0"
   },
   "devDependencies": {
     "eslint": "8.36.0",
