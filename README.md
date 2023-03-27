@@ -48,6 +48,51 @@ Example of the **rcliconfig.json** config file:
 
 - **root**: (String) Default **_src/_**.
 
+You can view the configuration using the command:
+
+`npx rg root`
+
+You can also modify it through the options:
+
+<table>
+  <tr>
+    <th>Options</th>
+    <th>Description</th>
+    <th>Values Type</th>
+    <th>Default Value</th>
+  </tr>
+  <tr>
+    <td width="30%">--changeURL</td>
+    <td width="35%">Change the baseURL value of the configuration file.</td>
+    <td width="17%">String</td>
+    <td width="18%"></td>
+  </tr>
+  <tr>
+    <td width="30%">--changeLang</td>
+    <td width="35%">Modifies if the files are generated in JS or TS. Values: js, ts.</td>
+    <td width="17%">String</td>
+    <td width="18%"></td>
+  </tr>
+  <tr>
+    <td width="30%">--useCSSModules</td>
+    <td width="35%">Style sheets are generated in CSS Modules.</td>
+    <td width="17%">Boolean</td>
+    <td width="18%">True</td>
+  </tr>
+  <tr>
+    <td width="30%">--no-useCSSModules</td>
+    <td width="35%">Style sheets are generated in CSS.</td>
+    <td width="17%">Boolean</td>
+    <td width="18%">False</td>
+  </tr>
+  <tr>
+    <td width="30%">--changeCSSPreprocessor</td>
+    <td width="35%">Change the CSS preprocessor to use. Values: scss, sass, none.</td>
+    <td width="17%">String</td>
+    <td width="18%"></td>
+  </tr>
+</table>
+
 ### Commands
 
 - `npx rg --version, -V`
