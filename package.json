@@ -1,25 +1,30 @@
 {
-  "name": "generate-react",
-  "version": "0.0.1",
-  "description": "A command line tool for React",
+  "name": "react-cli",
+  "version": "0.0.1-alpha",
+  "description": "A command line tool for creating components and hooks in React.js",
   "type": "module",
-  "main": "./bin/index.js",
+  "main": "bin/index.js",
   "bin": {
     "rg": "./bin/index.js"
   },
+  "author": "Martiks38 <cappa.giuliano@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/Martiks38/React-CLI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Martiks38/React-CLI"
+  },
+  "keywords": [
+    "cli",
+    "build-tools",
+    "react"
+  ],
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.cts,.mts",
     "lint:fix": "npm run lint -- --fix"
   },
-  "keywords": [
-    "CLI",
-    "Node.js",
-    "React.js"
-  ],
-  "author": "Martiks38 <cappa.giuliano@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "commander": "10.0.0",
     "inquirer": "9.1.5",
