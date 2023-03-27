@@ -3,8 +3,11 @@ import process from 'node:process'
 import pc from 'picocolors'
 import { generateComponent } from './generate/generateComponent.js'
 import { generateHook } from './generate/generateHook.js'
+import { modifyConfigurationFile } from './modifyConfiguration.js'
 
 export function generateCommands({ args, cliConfigFile, program }) {
+	/* Generator */
+
 	// Generate Component
 	program
 		.command('component')
@@ -35,30 +38,42 @@ export function generateCommands({ args, cliConfigFile, program }) {
 			}
 		})
 
+	/* Config file */
 	program
 		.command('root')
 		.description('Shows the root where the files will be generated')
-		.option('--change <changeValue>', 'Change the baseURL value of the configuration file')
+		.option('--changeURL <newBaseURL>', 'Change the baseURL value of the configuration file')
+		.option(
+			'--changeLang <lang>',
+			'Modifies if the files are generated in JS or TS. Values: js, ts'
+		)
+		.option('--useCSSModules', 'Style sheets are generated in CSS Modules')
+		.option('--no-useCSSModules', 'Style sheets are generated in CSS')
+		.option(
+			'--changeCSSPreprocessor <preprocessor>',
+			'Change the CSS preprocessor to use. Values: scss, sass, none'
+		)
 		.action((options) => {
 			const configFile = readFileSync('./rcliconfig.json', 'utf-8')
 			const config = JSON.parse(configFile)
 
-			if (options.change === undefined) {
+			if (Object.keys(options).length === 0) {
 				console.log(`\n${pc.blue('Root')}: ${config.baseURL}`)
-				return
-			}
+			} else {
+				try {
+					let newConfig = modifyConfigurationFile({ config, options })
 
-			let newConfig = JSON.stringify({ ...config, baseURL: options.change }, null, 2)
+					writeFileSync('./rcliconfig.json', newConfig, 'utf-8')
 
-			try {
-				writeFileSync('./rcliconfig.json', newConfig)
+					console.log(`\n${pc.green('SUCESS')} Configuration file modified successfully`)
+				} catch (err) {
+					if (err.name === 'ConfigError') throw err
 
-				console.log(`\n${pc.green('SUCESS')} Configuration file modified successfully`)
-			} catch (err) {
-				const error = new Error('Error modifying configuration file')
+					const error = new Error('Error modifying configuration file')
 
-				error.name = 'ConfigError'
-				throw error
+					error.name = 'ConfigError'
+					throw error
+				}
 			}
 		})
 
