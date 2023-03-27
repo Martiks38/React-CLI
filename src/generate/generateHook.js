@@ -18,7 +18,14 @@ export function generateHook({ cliConfigFile, name }) {
 	}
 
 	if (!name.startsWith('use')) {
-		const error = new Error('\nHooks begin with the word "use"')
+		const error = new Error('Hooks begin with the word "use"')
+
+		error.name = 'HookNameError'
+		throw error
+	}
+
+	if (name.length === 3) {
+		const error = new Error('Invalid name. A valid name, for example, is username.')
 
 		error.name = 'HookNameError'
 		throw error
