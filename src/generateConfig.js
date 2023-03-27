@@ -24,7 +24,7 @@ async function questions() {
 				type: 'confirm',
 				message: `Would you like to use ${pc.blue('CSS Modules')} with this project?`,
 				name: 'usesCssModule',
-				default: 'Yes'
+				default: 'No'
 			},
 			{
 				type: 'list',
