@@ -10,7 +10,7 @@ export async function cli(args) {
 
 	const program = new Command()
 
-	program.version(pkg.version)
+	program.version(pkg.version).name('rg')
 	program.description('A command line tool for creating components and hooks in React.js')
 
 	generateCommands({ args, cliConfigFile, program })
