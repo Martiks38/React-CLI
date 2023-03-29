@@ -1,7 +1,7 @@
-<h1 align="center">React CLI 💻</h1>
+<h1 align="center">React Tools 💻</h1>
 
 <h2>
-  React CLI is a program for creating components and hooks. This tool was created for learning and personal use.
+  React Tools is a CLI for creating components and hooks. This tool was created for learning and personal use.
 </h2>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -91,6 +91,18 @@ You can also modify it through the options:
     <td width="17%">String</td>
     <td width="18%"></td>
   </tr>
+  <tr>
+    <td width="30%">--useTest</td>
+    <td width="35%">Habilita la creación de archivo de prueba.</td>
+    <td width="17%">Boolean</td>
+    <td width="18%">True</td>
+  </tr>
+  <tr>
+    <td width="30%">--no-useTest</td>
+    <td width="35%">Deshabilita la creación de archivo de prueba.</td>
+    <td width="17%">Boolean</td>
+    <td width="18%">False</td>
+  </tr>
 </table>
 
 ### Commands
@@ -133,6 +145,34 @@ To generate a component in another folder you must write the name of the folder 
             |-- index.jsx
             |-- Avatar.css
 ```
+
+<table>
+  <tr>
+    <th>Options</th>
+    <th>Description</th>
+    <th>Values Type</th>
+    <th>Default Value</th>
+  </tr>
+  <tr>
+    <td width="30%">--fileName</td>
+    <td width="35%">Generate a &lt;name&gt;.jsx|tsx file instead of index.</td>
+    <td width="17%">String</td>
+    <td width="18%">index</td>
+  </tr>
+  <tr>
+    <td width="30%">--withoutStyles</td>
+    <td width="35%">It will not generate the component's stylesheet.</td>
+    <td width="17%">Boolean</td>
+    <td width="18%">True</td>
+  </tr>
+  <tr>
+    <td width="30%">--withoutTest</td>
+    <td width="35%">It will not generate the test file of the component.</td>
+    <td width="17%">Boolean</td>
+    <td width="18%">True</td>
+  </tr>
+
+</table>
 
 ### Generate Hooks
 
