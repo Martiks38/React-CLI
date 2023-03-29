@@ -1,8 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import pc from 'picocolors'
 import inquirer from 'inquirer'
+import pc from 'picocolors'
 
-// User Questions
+/**
+ * Ask the questions to generate the configuration file.
+ * @returns { Promise<Config> }
+ * @throws { AnswerError }
+ */
 async function questions() {
 	console.log('')
 
@@ -38,11 +42,16 @@ async function questions() {
 		.catch(() => {
 			const error = new Error('It was produce a error to create the config file.')
 
-			error.name = 'InternalError'
+			error.name = 'AnswerError'
 			throw error
 		})
 }
 
+/**
+ * @description Find the configuration file. If it finds it, it reads it and returns the information. Otherwise, it calls questions(), generates that file, and returns the answer.
+ * @returns { Config }
+ * @throws If an error occurs, the execution will be terminated.
+ */
 export async function getCLIConfigFile() {
 	try {
 		if (existsSync('./rcliconfig.json')) {

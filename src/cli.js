@@ -3,6 +3,10 @@ import { Command } from 'commander'
 import { generateCommands } from './commands.js'
 import { getCLIConfigFile } from './generateConfig.js'
 
+/**
+ * @description Executes the function that generates/gets the configuration file and the function that generates the commands.
+ * @param { Args }
+ */
 export async function cli(args) {
 	const cliConfigFile = await getCLIConfigFile()
 	const localRequire = createRequire(import.meta.url)
