@@ -14,28 +14,41 @@ async function questions() {
 		.prompt([
 			{
 				type: 'input',
-				message: `What ${pc.blue('baseURL')} would you like configured?`,
 				name: 'baseURL',
+				message: `What ${pc.blue('baseURL')} would you like configured?`,
 				default: 'src'
 			},
 			{
 				type: 'confirm',
-				message: `Use ${pc.blue('TypeScript')} in this project?`,
-				default: 'Yes',
-				name: 'usesTypeScript'
+				name: 'usesTypeScript',
+				message: `Does this project use ${pc.blue('TypeScript')}?`,
+				default: 'Yes'
 			},
 			{
 				type: 'confirm',
-				message: `Would you like to use ${pc.blue('CSS Modules')} with this project?`,
 				name: 'usesCssModule',
+				message: `Does this project use a ${pc.blue('CSS Modules')}?`,
 				default: 'No'
 			},
 			{
 				type: 'list',
-				message: `Use ${pc.blue('CSS preprocessor')} in this project?`,
-				choices: ['none', 'scss', 'sass'],
-				default: 'none',
-				name: 'cssPreprocessor'
+				name: 'cssPreprocessor',
+				message: `Does this project use a ${pc.blue('CSS Preprocessor')}?`,
+				choices: ['none', 'scss', 'sass', 'less', 'stylus'],
+				default: 'none'
+			},
+			{
+				type: 'confirm',
+				name: 'usesTests',
+				message: `Do you ${pc.blue('test')} on this project?`,
+				default: 'Yes'
+			},
+			{
+				type: 'list',
+				name: 'testLibrary',
+				when: (answers) => answers['usesTests'],
+				message: 'What testing library does your project use?',
+				choices: ['Testing Library', 'Enzyme', 'none']
 			}
 		])
 		.then((answers) => answers)
