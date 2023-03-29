@@ -1,24 +1,36 @@
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { existsSync, mkdirSync, writeFile } from 'node:fs'
 import pc from 'picocolors'
 import tempCompJS from '../template/componentJS.js'
 import tempCompTS from '../template/componentTS.js'
 import { lineStyle } from '../consts/index.js'
 
-export function generateComponent({ cliConfigFile, name }) {
+/**
+ *
+ * @param { Object } Props
+ * @property { ConfigOptions } cliConfigFile
+ * @property { string } schematic
+ * @property { Config } options
+ */
+export function generateComponent({ cliConfigFile, schematic, options }) {
 	const { cssPreprocessor, baseURL, usesCssModule, usesTypeScript } = cliConfigFile
 	const compExtension = usesTypeScript ? '.tsx' : '.jsx'
+	const filesToWrite = []
 	let styleExtension = `.module.${cssPreprocessor === 'none' ? 'css' : cssPreprocessor}`
-	let folders = name.split(path.sep)
+	let folders = schematic.split('/')
 
 	// Sets the component name to capitalize
 	let nameComponent = folders[folders.length - 1]
 
-	let nameComponentStandard = nameComponent.charAt(0).toUpperCase() + nameComponent.slice(1)
+	let nameComponentStandard =
+		nameComponent
+			.replaceAll(/[\]\[]/gi, '')
+			.charAt(0)
+			.toUpperCase() + nameComponent.replaceAll(/[\]\[]/gi, '').slice(1)
 
-	let routes = name.includes('/')
-		? [...folders.slice(0, -1), nameComponentStandard]
-		: ['components', nameComponentStandard]
+	let routes = schematic.includes('/')
+		? [...folders.slice(0, -1), nameComponent]
+		: ['components', nameComponent]
 	let route = path.join(baseURL, ...routes)
 
 	// Sets the component template
@@ -36,24 +48,29 @@ export function generateComponent({ cliConfigFile, name }) {
 		component = component.replaceAll('TemplateProps', `${nameComponentStandard}Props`)
 	}
 
-	// Sets the CSS Module of the component
-	if (!usesCssModule) {
-		styleExtension = styleExtension.replace('.module', '')
-		component = component.replace(lineStyle, `import './${nameComponentStandard}${styleExtension}'`)
+	if (!options?.withoutStyles) {
+		// Sets the CSS Module of the component
+		if (!usesCssModule) {
+			styleExtension = styleExtension.replace('.module', '')
+			component = component.replace(
+				lineStyle,
+				`import './${nameComponentStandard}${styleExtension}'`
+			)
+		}
+
+		filesToWrite.push({
+			pathFile: path.join(route, nameComponentStandard + styleExtension),
+			content: ''
+		})
 	}
+
 	component = component.replaceAll('TemplateName', nameComponentStandard)
 	component = component.replace('Template component', nameComponentStandard)
 
-	let filesToWrite = [
-		{
-			pathFile: path.join(route, `index${compExtension}`),
-			content: component
-		},
-		{
-			pathFile: path.join(route, nameComponentStandard + styleExtension),
-			content: ''
-		}
-	]
+	filesToWrite.push({
+		pathFile: path.join(route, `${options?.fileName || 'index'}${compExtension}`),
+		content: component
+	})
 
 	// Generate the folders if they don't exist
 	route.split(path.sep).reduce((prevPath, folder) => {
@@ -64,16 +81,24 @@ export function generateComponent({ cliConfigFile, name }) {
 	}, '')
 
 	// Generates the component files
-	filesToWrite.forEach(({ pathFile, content }) => {
-		writeFile(pathFile, content, (error) => {
-			if (error) {
-				const err = new Error('An error occurred while generating the hook')
+	for (let { pathFile, content } of filesToWrite) {
+		try {
+			writeFileSync(pathFile, content)
+		} catch (error) {
+			const err = new Error('An error occurred while generating the component')
 
-				err.name = 'InternalError'
-				throw err
-			}
-		})
-	})
+			err.name = 'InternalError'
+			throw err
+		}
+	}
 
-	console.log(pc.green(`${name} created successfully`))
+	console.log(
+		pc.green(
+			`\n${
+				options?.fileName
+					? nameComponentStandard.concat('/', options.fileName)
+					: nameComponentStandard
+			} created successfully`
+		)
+	)
 }
