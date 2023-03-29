@@ -1,3 +1,9 @@
+/**
+ * @param { Object }
+ * @property { Config } config
+ * @property { ConfigOptions } options
+ * @returns { Config }
+ */
 export function modifyConfigurationFile({ config, options }) {
 	const { changeLang, changeURL, changeCSSPreprocessor, useCSSModules } = options
 	let newConfig = { ...config }
