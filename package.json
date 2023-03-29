@@ -1,5 +1,5 @@
 {
-  "name": "react-cli",
+  "name": "react-tools",
   "version": "0.0.1-alpha",
   "description": "A command line tool for creating components and hooks in React.js",
   "type": "module",
