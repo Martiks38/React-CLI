@@ -18,14 +18,14 @@ export function generateCommands({ args, cliConfigFile, program }) {
 		.command('component')
 		.argument('<componentPath>', 'Name of the component')
 		.alias('c')
-		.option(
-			'--fileName <name>',
-			'Sets the name of the generated jsx|tsx file. (default: index)',
-			'index'
-		)
+		.option('--fileName <name>', 'Generate a <name>.jsx|tsx file. (default: index)', 'index')
 		.option(
 			'--withoutStyles',
 			'Indicates that you should not generate the stylesheet file for the component'
+		)
+		.option(
+			'--withoutTest',
+			'Indicates that you should not generate the test file for the component'
 		)
 		.action((schematic, options) => {
 			try {
@@ -61,12 +61,14 @@ export function generateCommands({ args, cliConfigFile, program }) {
 			'--changeLang <lang>',
 			'Modifies if the files are generated in JS or TS. Values: js, ts'
 		)
-		.option('--useCSSModules', 'Style sheets are generated in CSS Modules')
-		.option('--no-useCSSModules', 'Style sheets are generated in CSS')
+		.option('--useCSSModules', 'Stylesheets are generated in CSS Modules')
+		.option('--no-useCSSModules', 'Stylesheets are not generated in CSS modules')
 		.option(
 			'--changeCSSPreprocessor <preprocessor>',
 			'Change the CSS preprocessor to use. Values: scss, sass, none'
 		)
+		.option('--useTest', 'Enable test file generation')
+		.option('--no-useTest', 'Disable test file generation')
 		.name('config')
 		.usage('[options]')
 		.action((options, cmd) => {
