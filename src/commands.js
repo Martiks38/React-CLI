@@ -5,17 +5,31 @@ import { generateComponent } from './generate/generateComponent.js'
 import { generateHook } from './generate/generateHook.js'
 import { modifyConfigurationFile } from './modifyConfiguration.js'
 
+/**
+ * @param { Object }
+ * @property { Args } args
+ * @property { Config } cliConfigFile
+ * @property { Object } program
+ */
 export function generateCommands({ args, cliConfigFile, program }) {
 	/* Generator */
-
 	// Generate Component
 	program
 		.command('component')
-		.argument('<name>', 'Name of the component')
+		.argument('<componentPath>', 'Name of the component')
 		.alias('c')
-		.action((name) => {
+		.option(
+			'--fileName <name>',
+			'Sets the name of the generated jsx|tsx file. (default: index)',
+			'index'
+		)
+		.option(
+			'--withoutStyles',
+			'Indicates that you should not generate the stylesheet file for the component'
+		)
+		.action((schematic, options) => {
 			try {
-				generateComponent({ cliConfigFile, name })
+				generateComponent({ cliConfigFile, schematic, options })
 				process.exit(0)
 			} catch (error) {
 				console.error(`[${error.name}]: ${error.message}`)
@@ -40,7 +54,7 @@ export function generateCommands({ args, cliConfigFile, program }) {
 
 	/* Config file */
 	program
-		.command('root')
+		.command('config')
 		.description('Shows the root where the files will be generated')
 		.option('--changeURL <newBaseURL>', 'Change the baseURL value of the configuration file')
 		.option(
@@ -53,27 +67,27 @@ export function generateCommands({ args, cliConfigFile, program }) {
 			'--changeCSSPreprocessor <preprocessor>',
 			'Change the CSS preprocessor to use. Values: scss, sass, none'
 		)
-		.action((options) => {
+		.name('config')
+		.usage('[options]')
+		.action((options, cmd) => {
 			const configFile = readFileSync('./rcliconfig.json', 'utf-8')
 			const config = JSON.parse(configFile)
 
-			if (Object.keys(options).length === 0) {
-				console.log(`\n${pc.blue('Root')}: ${config.baseURL}`)
-			} else {
-				try {
-					let newConfig = modifyConfigurationFile({ config, options })
+			if (Object.keys(options).length === 0) cmd.help()
 
-					writeFileSync('./rcliconfig.json', newConfig, 'utf-8')
+			try {
+				let newConfig = modifyConfigurationFile({ config, options })
 
-					console.log(`\n${pc.green('SUCESS')} Configuration file modified successfully`)
-				} catch (err) {
-					if (err.name === 'ConfigError') throw err
+				writeFileSync('./rcliconfig.json', newConfig, 'utf-8')
 
-					const error = new Error('Error modifying configuration file')
+				console.log(`\n${pc.green('SUCESS')} Configuration file modified successfully`)
+			} catch (err) {
+				if (err.name === 'ConfigError') throw err
 
-					error.name = 'ConfigError'
-					throw error
-				}
+				const error = new Error('Error modifying configuration file')
+
+				error.name = 'ConfigError'
+				throw error
 			}
 		})
 
