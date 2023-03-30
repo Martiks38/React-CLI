@@ -45,10 +45,11 @@ async function questions() {
 			},
 			{
 				type: 'list',
-				name: 'testLibrary',
+				name: 'testingLibrary',
 				when: (answers) => answers['usesTests'],
 				message: 'What testing library does your project use?',
-				choices: ['Testing Library', 'Enzyme', 'none']
+				choices: ['Testing Library', 'Enzyme'],
+				default: 'Testing Library'
 			}
 		])
 		.then((answers) => answers)
