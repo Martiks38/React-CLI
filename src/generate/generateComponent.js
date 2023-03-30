@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import pc from 'picocolors'
-import tempCompJS from '../template/componentJS.js'
-import tempCompTS from '../template/componentTS.js'
 import { lineStyle } from '../consts/index.js'
+import { templateTest } from '../template/test.js'
+import { templateComponent } from '../template/component.js'
 
 /**
  *
@@ -16,7 +16,10 @@ export function generateComponent({ cliConfigFile, schematic, options }) {
 	const { cssPreprocessor, baseURL, usesCssModule, usesTypeScript } = cliConfigFile
 	const compExtension = usesTypeScript ? '.tsx' : '.jsx'
 	const filesToWrite = []
-	let styleExtension = `.module.${cssPreprocessor === 'none' ? 'css' : cssPreprocessor}`
+	let preprocessor =
+		cssPreprocessor === 'none' ? 'css' : cssPreprocessor === 'stylus' ? 'styl' : cssPreprocessor
+
+	let styleExtension = `.module.${preprocessor}`
 	let folders = schematic.split('/')
 
 	// Sets the component name to capitalize
@@ -34,7 +37,7 @@ export function generateComponent({ cliConfigFile, schematic, options }) {
 	let route = path.join(baseURL, ...routes)
 
 	// Sets the component template
-	let component = usesTypeScript ? tempCompTS : tempCompJS
+	let component = templateComponent({ extension: compExtension, name: nameComponentStandard })
 
 	if (existsSync(route)) {
 		const error = new Error(`The ${nameComponentStandard} component is already created`)
@@ -43,12 +46,7 @@ export function generateComponent({ cliConfigFile, schematic, options }) {
 		throw error
 	}
 
-	// Replaces the name of the props
-	if (usesTypeScript) {
-		component = component.replaceAll('TemplateProps', `${nameComponentStandard}Props`)
-	}
-
-	if (!options?.withoutStyles) {
+	if (!options.noStyles) {
 		// Sets the CSS Module of the component
 		if (!usesCssModule) {
 			styleExtension = styleExtension.replace('.module', '')
@@ -64,13 +62,23 @@ export function generateComponent({ cliConfigFile, schematic, options }) {
 		})
 	}
 
-	component = component.replaceAll('TemplateName', nameComponentStandard)
-	component = component.replace('Template component', nameComponentStandard)
-
 	filesToWrite.push({
-		pathFile: path.join(route, `${options?.fileName || 'index'}${compExtension}`),
+		pathFile: path.join(route, `${options.fileName}${compExtension}`),
 		content: component
 	})
+
+	if (!options.noTest) {
+		let file = nameComponentStandard + '.test' + compExtension
+		let content = templateTest({
+			library: cliConfigFile.testingLibrary,
+			name: nameComponentStandard
+		})
+
+		filesToWrite.push({
+			pathFile: path.join(route, file),
+			content
+		})
+	}
 
 	// Generate the folders if they don't exist
 	route.split(path.sep).reduce((prevPath, folder) => {
@@ -91,11 +99,10 @@ export function generateComponent({ cliConfigFile, schematic, options }) {
 			throw err
 		}
 	}
-
 	console.log(
 		pc.green(
 			`\n${
-				options?.fileName
+				options.fileName !== 'index'
 					? nameComponentStandard.concat('/', options.fileName)
 					: nameComponentStandard
 			} created successfully`
