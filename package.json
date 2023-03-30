@@ -1,7 +1,7 @@
 {
   "name": "react-tools",
-  "version": "0.0.1-alpha",
-  "description": "A command line tool for creating components and hooks in React.js",
+  "version": "1.0.0",
+  "description": "React Tools is a CLI for creating components and hooks. This tool was created for learning and personal use",
   "type": "module",
   "main": "bin/index.js",
   "bin": {
