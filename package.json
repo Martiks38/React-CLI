@@ -5,7 +5,7 @@
   "type": "module",
   "main": "bin/index.js",
   "bin": {
-    "rg": "./bin/index.js"
+    "rgenerate": "./bin/index.js"
   },
   "author": "Martiks38 <cappa.giuliano@gmail.com>",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "react"
   ],
   "scripts": {
-    "prepare": "husky install",
+    "husky": "husky install",
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.cts,.mts",
     "lint:fix": "npm run lint -- --fix"

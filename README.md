@@ -36,13 +36,13 @@ If you install globally, add _rcliconfig.json_ to _.gitignore_.
 You can run it using npx
 
 ```bash
-  npx rg component Avatar
+  npx rgenerate component Avatar
 ```
 
 Globally
 
 ```bash
-  rg component Avatar
+  rgenerate component Avatar
 ```
 
 ### Config file
@@ -76,7 +76,7 @@ Example of the **rcliconfig.json** config file:
 
 You can modify the configuration file through the following options:
 
-`npx rg config [options]`
+`npx rgenerate config [options]`
 
 <table>
   <tr>
@@ -132,7 +132,7 @@ You can modify the configuration file through the following options:
 ### Generate Components
 
 ```bash
-  npx rg component Avatar
+  npx rgenerate component Avatar
 ```
 
 This command will create a folder with the name of the component inside the default src/components directory and its corresponding files.
@@ -150,7 +150,7 @@ This command will create a folder with the name of the component inside the defa
 To generate a component in another folder you must write the name of the folder and the component joined by "/". For example:
 
 ```bash
-  npx rg component pages/Home
+  npx rgenerate component pages/Home
 ```
 
 ```txt
@@ -191,7 +191,7 @@ To generate a component in another folder you must write the name of the folder 
 ### Generate Hooks
 
 ```bash
-  npx rg hook useHook
+  npx rgenerate hook useHook
 ```
 
 This command will create a file with the name of the hook in the hooks folder. If the folder does not exist it will create it in the process.
