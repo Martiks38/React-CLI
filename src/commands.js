@@ -13,6 +13,7 @@ import { modifyConfigurationFile } from './modifyConfiguration.js'
  */
 export function generateCommands({ args, cliConfigFile, program }) {
 	/* Generator */
+
 	// Generate Component
 	program
 		.command('component')
@@ -20,12 +21,14 @@ export function generateCommands({ args, cliConfigFile, program }) {
 		.alias('c')
 		.option('--fileName <name>', 'Generate a <name>.jsx|tsx file. (default: index)', 'index')
 		.option(
-			'--withoutStyles',
-			'Indicates that you should not generate the stylesheet file for the component'
+			'--noStyles',
+			'Indicates that you should not generate the stylesheet file for the component',
+			false
 		)
 		.option(
-			'--withoutTest',
-			'Indicates that you should not generate the test file for the component'
+			'--noTest',
+			'Indicates that you should not generate the test file for the component',
+			false
 		)
 		.action((schematic, options) => {
 			try {
