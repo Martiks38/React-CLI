@@ -17,12 +17,32 @@
 - [Generate components](#generate-components)
 - [Generate hooks](#generate-hooks)
 
+### Quickstart
+
+Install via NPM:
+
+```bash
+  npm i react-tools --save-dev
+```
+
+If you install globally, add _rcliconfig.json_ to _.gitignore_.
+
+```bash
+  npm i -g react-tools
+```
+
 ### Execution
 
 You can run it using npx
 
 ```bash
   npx rg component Avatar
+```
+
+Globally
+
+```bash
+  rg component Avatar
 ```
 
 ### Config file
@@ -36,9 +56,13 @@ Example of the **rcliconfig.json** config file:
     "baseURL": "src",
     "usesTypeScript": true,
     "usesCSSModule": false,
-    "cssPreprocessor": "none"
+    "cssPreprocessor": "none",
+    "usesTests": true,
+    "testingLibrary": "Testing Library"
   }
 ```
+
+- **baseURL**: (String) Default **_src_**.
 
 - **usesTypeScript**: (Boolean) Default **_true_**. The components and hooks will be generated in tsx and ts format respectively.
 
@@ -46,13 +70,13 @@ Example of the **rcliconfig.json** config file:
 
 - **cssPreprocessor**: (String) Default **_scss_**. Values: scss, sass, and none.
 
-- **root**: (String) Default **_src/_**.
+- **usesTests**: (Boolean) Default **_true_**. Indicates whether to generate the test file.
 
-You can view the configuration using the command:
+- **testingLibrary**: (String) Default **_Testing Library_**.
 
-`npx rg root`
+You can modify the configuration file through the following options:
 
-You can also modify it through the options:
+`npx rg config [options]`
 
 <table>
   <tr>
@@ -105,15 +129,6 @@ You can also modify it through the options:
   </tr>
 </table>
 
-### Commands
-
-- `npx rg --version, -V`
-- `npx rg --help, -h`
-- `npx rg component <name>` or `npx rg component <name>`
-- `npx rg hook <name>` or `npx rg hook <name>`
-- `npx rg root`
-- `npx rg root --change <baseURL>`
-
 ### Generate Components
 
 ```bash
@@ -160,18 +175,17 @@ To generate a component in another folder you must write the name of the folder 
     <td width="18%">index</td>
   </tr>
   <tr>
-    <td width="30%">--withoutStyles</td>
+    <td width="30%">--noStyles</td>
     <td width="35%">It will not generate the component's stylesheet.</td>
     <td width="17%">Boolean</td>
-    <td width="18%">True</td>
+    <td width="18%">False</td>
   </tr>
   <tr>
-    <td width="30%">--withoutTest</td>
+    <td width="30%">--noTest</td>
     <td width="35%">It will not generate the test file of the component.</td>
     <td width="17%">Boolean</td>
-    <td width="18%">True</td>
+    <td width="18%">False</td>
   </tr>
-
 </table>
 
 ### Generate Hooks
