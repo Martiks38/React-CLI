@@ -1,7 +1,7 @@
 {
-  "name": "react-tools",
-  "version": "1.0.0",
-  "description": "React Tools is a CLI for creating components and hooks. This tool was created for learning and personal use",
+  "name": "g-react-cli",
+  "version": "1.1.0",
+  "description": "g-react-cli is a program for creating components and hooks. This tool was created for learning and personal use",
   "type": "module",
   "main": "bin/index.js",
   "bin": {

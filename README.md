@@ -1,7 +1,7 @@
-<h1 align="center">React Tools 💻</h1>
+<h1 align="center">g-react-cli 💻</h1>
 
 <h2>
-  React Tools is a CLI for creating components and hooks. This tool was created for learning and personal use.
+  g-react-cli is a program for creating components and hooks. This tool was created for learning and personal use.
 </h2>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
