@@ -22,13 +22,13 @@
 Install via NPM:
 
 ```bash
-  npm i react-tools --save-dev
+  npm i react-ch-cli --save-dev
 ```
 
 If you install globally, add _rcliconfig.json_ to _.gitignore_.
 
 ```bash
-  npm i -g react-tools
+  npm i -g react-ch-cli
 ```
 
 ### Execution
