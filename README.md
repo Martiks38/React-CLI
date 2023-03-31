@@ -1,7 +1,7 @@
-<h1 align="center">g-react-cli 💻</h1>
+<h1 align="center">react-ch-cli 💻</h1>
 
 <h2>
-  g-react-cli is a program for creating components and hooks. This tool was created for learning and personal use.
+  react-ch-cli is a program for creating components and hooks.
 </h2>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
